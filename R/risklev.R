@@ -1,22 +1,53 @@
 
-
+#' @title Risk Level of \link[rpart]{rpart} Object
+#' 
+#' @description
+#' ..
+#' 
+#' @param object \link[rpart]{rpart}
+#' 
+#' @param ... ..
+#' 
+#' @returns 
+#' Function [risklev] returns a \link[base]{factor}.
+#' 
+#' @note
+#' Function \link[rpart]{labels.rpart} (for S3 generic \link[base]{labels}) only captures the last branching information, which is not ideal.
+#' 
+#' @examples
+#' library(rpart)
+#' rp = rpart(Kyphosis ~ Age + Number + Start, data = kyphosis, model = TRUE)
+#' prp_(rp)
+#' risklev(rp)
+#' ggsurvplot_rpart(rp)
+#' 
+#' @export
 risklev <- function(object, ...) {
   
   # use `$model`, i.e., after removing missingness from original data
   
   if (!inherits(object, what = 'rpart')) stop('input must be rpart')
   
-  leafID <- (object$frame$var == '<leaf>')
-  leafRisk <- object$frame$yval[leafID]
-  leafLab <- labels(object, pretty = FALSE)[leafID] # ?rpart:::labels.rpart
-  # order as in the leaves, from left to right
+  id <- (object$frame$var == '<leaf>')
+  #leaf_y <- object$frame$yval[id] # may have duplicates!!!
+  #leaf_lab <- labels(object, pretty = FALSE)[id]# order as in the leaves, from left to right
   
-  whr <- object$where # which `leafID` goes every (non-missing) observation
-  # stopifnot(setequal(which(leafID), whr)) 
+  # labels(object, pretty = TRUE)[id] # no good
+  
+  whr <- object$where # which `id` goes to every (non-missing) observation
+  # stopifnot(setequal(which(id), whr)) 
    
-  y0 <- object$frame$yval[whr]
+  y0 <- object$frame$yval[whr] # numeric
   risk <- factor(y0) # levels in ascending order
-  attr(risk, which = 'levels') <- sprintf(fmt = '%s (%.2g)', leafLab, leafRisk)[order(leafRisk)]
+  
+  if (FALSE) {
+    # this is WRONG!!
+    # did not consider duplicates in `leaf_y` !!
+    #attr(risk, which = 'levels') <- sprintf(fmt = '%s (%.2g)', leaf_lab, leaf_y)[order(leaf_y)]
+  }
+  
+  attr(risk, which = 'levels') <- sprintf(fmt = '%.2g', sort.default(unique.default(y0)))
+  
   return(risk)
   
 }

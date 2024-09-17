@@ -21,6 +21,7 @@ ggsurvplot_rpart <- function(fit, ...) {
   # works but too ugly
   
   sfit <- survfit.rpart(fit)
+  if (!length(sfit)) return(invisible())
   
   p <- ggsurvplot(
     fit = sfit, data = sfit[['data']], 
