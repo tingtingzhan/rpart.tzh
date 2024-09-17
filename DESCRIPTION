@@ -1,0 +1,19 @@
+Package: rpart.tzh
+Type: Package
+Title: Extensions for rpart
+Version: 0.1.0
+Date: 2024-01-15
+Author: Tingting Zhan [aut, cre, cph]
+Maintainer: Tingting Zhan <tingtingzhan@gmail.com>
+Description: To extend rpart package.
+License: GPL-2
+Encoding: UTF-8
+Authors@R: c(person(given = "Tingting", family = "Zhan", role =
+       c("aut", "cre", "cph"), email =
+       c("tingtingzhan@gmail.com")))
+Language: en-US
+RoxygenNote: 7.3.2
+Roxygen: list(markdown = TRUE)
+Depends: R (>= 4.4.0)
+Imports: rpart.plot, survival, survminer
+Suggests: rpart
