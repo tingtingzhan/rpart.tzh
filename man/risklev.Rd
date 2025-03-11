@@ -23,8 +23,8 @@ Function \link[rpart]{labels.rpart} (for S3 generic \link[base]{labels}) only ca
 \examples{
 library(rpart)
 rp = rpart(Kyphosis ~ Age + Number + Start, data = kyphosis, model = TRUE)
-prp_(rp)
-risklev(rp)
-ggsurvplot_rpart(rp)
+rp |> prp_()
+rp |> risklev()
+rp |> ggsurvplot_rpart()
 
 }

@@ -17,9 +17,9 @@
 #' @examples
 #' library(rpart)
 #' rp = rpart(Kyphosis ~ Age + Number + Start, data = kyphosis, model = TRUE)
-#' prp_(rp)
-#' risklev(rp)
-#' ggsurvplot_rpart(rp)
+#' rp |> prp_()
+#' rp |> risklev()
+#' rp |> ggsurvplot_rpart()
 #' 
 #' @export
 risklev <- function(object, ...) {

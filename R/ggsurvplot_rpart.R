@@ -13,7 +13,7 @@
 #' library(survival)
 #' library(rpart)
 #' rp = rpart(Surv(time, status) ~ age, data = veteran, maxdepth = 2L, model = TRUE)
-#' ggsurvplot_rpart(rp)
+#' rp |> ggsurvplot_rpart()
 #' 
 #' @importFrom survminer ggsurvplot
 #' @export

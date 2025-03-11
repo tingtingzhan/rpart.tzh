@@ -14,7 +14,7 @@ rmd_.rpart(x, xnm, ...)
 \item{...}{..}
 }
 \value{
-Function \link{rmd_.rpart} returns a \link[base]{character} \link[base]{vector}.
+Function \code{\link[=rmd_.rpart]{rmd_.rpart()}} returns a \link[base]{character} \link[base]{vector}.
 }
 \description{
 ..

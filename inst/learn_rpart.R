@@ -1,12 +1,12 @@
 
-?rpart::rpart
+# ?rpart::rpart
 library(rpart)
-set.seed(1314); (x1 = rnorm(3))
-{
-  set.seed(1314);
-  fit = rpart(Kyphosis ~ Age + Number + Start, data = kyphosis)
-  (x2 = rnorm(3))
-}
-stopifnot(!identical(x1, x2)) # !!!!
-# ?rpart::rpart used random seed!!!!
+set.seed(1314); m1 = rpart(Kyphosis ~ Age + Number + Start, data = kyphosis)
+set.seed(1314); m1a = rpart(Kyphosis ~ Age + Number + Start, data = kyphosis)
+set.seed(125); m2 = rpart(Kyphosis ~ Age + Number + Start, data = kyphosis)
+
+stopifnot(
+  identical(m1, m1a),
+  !identical(m1, m2)
+) # ?rpart::rpart used random seed!!!!
 
