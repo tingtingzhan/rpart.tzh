@@ -37,7 +37,7 @@ rmd_.rpart <- function(x, xnm, ...) {
   if (inherits(y, what = 'Surv')) {
     txt2 <- 'Kaplan-Meier estimates and curves based on the partition branches are created by <u>**`R`**</u> package <u>**`survival`**</u>.'
     KM <- c(
-      sprintf(fmt = '```{r results = \'asis\', fig.height = %.1f, fig.width = %.1f}', 4, 7), 
+      sprintf(fmt = '```{r fig.height = %.1f, fig.width = %.1f}', 4, 7), 
       #sprintf(fmt = 'ggsurvplot_rpart(%s)', xnm), # too ugly!!
       sprintf(fmt = 'ggKM.rpart(%s)', xnm), # ?survival.tzh::ggKM.rpart
       '```'
@@ -47,7 +47,7 @@ rmd_.rpart <- function(x, xnm, ...) {
   return(c(
     paste(txt1, txt2),
     '',
-    sprintf(fmt = '```{r results = \'asis\', fig.height = %.1f, fig.width = %.1f}', h, w), 
+    sprintf(fmt = '```{r fig.height = %.1f, fig.width = %.1f}', h, w), 
     sprintf(fmt = 'prp_(%s)', xnm), 
     '```',
     KM
