@@ -34,7 +34,7 @@ ggsurvplot_rpart <- function(fit, ...) {
   # @importFrom ggplot2 scale_y_continuous
   #suppressMessages(
   #  p$plot <- p$plot + 
-  #    scale_y_continuous(labels = function(x) sprintf(fmt = '%.0f%%', 1e2*x))
+  #    scale_y_continuous(labels = \(x) sprintf(fmt = '%.0f%%', 1e2*x))
   #)
   
   return(p)
