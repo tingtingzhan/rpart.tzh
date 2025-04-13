@@ -1,6 +1,6 @@
 
 
-#' @title Create R Markdown Lines for \link[rpart]{rpart} Objects
+#' @title Create Markdown Lines for \link[rpart]{rpart} Objects
 #' 
 #' @description
 #' ..
@@ -12,11 +12,11 @@
 #' @param ... ..
 #' 
 #' @returns 
-#' Function [rmd_.rpart()] returns a \link[base]{character} \link[base]{vector}.
+#' Function [md_.rpart()] returns a \link[base]{character} \link[base]{vector}.
 #' 
 #' @keywords internal
 #' @export
-rmd_.rpart <- function(x, xnm, ...) {
+md_.rpart <- function(x, xnm, ...) {
   
   h <- attr(x, which = 'fig.height', exact = TRUE) %||% 6
   w <- attr(x, which = 'fig.width', exact = TRUE) %||% 7
