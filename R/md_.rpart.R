@@ -48,7 +48,7 @@ md_.rpart <- function(x, xnm, ...) {
     paste(txt1, txt2),
     '',
     sprintf(fmt = '```{r fig.height = %.1f, fig.width = %.1f}', h, w), 
-    sprintf(fmt = 'prp_(%s)', xnm), 
+    sprintf(fmt = 'rpart.tzh::prp_(%s)', xnm), 
     '```',
     KM
   ))
