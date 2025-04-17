@@ -4,7 +4,7 @@
 \alias{md_.rpart}
 \title{Create Markdown Lines for \link[rpart]{rpart} Objects}
 \usage{
-md_.rpart(x, xnm, ...)
+\method{md_}{rpart}(x, xnm, ...)
 }
 \arguments{
 \item{x}{\link[rpart]{rpart} object}
@@ -18,5 +18,13 @@ Function \code{\link[=md_.rpart]{md_.rpart()}} returns a \link[base]{character} 
 }
 \description{
 ..
+}
+\examples{
+library(rmd.tzh)
+library(rpart)
+list(
+ '`rpart`' = rpart(Kyphosis ~ Age + Number + Start, data = kyphosis, model = TRUE)
+) |> render_(file = 'rpart')
+
 }
 \keyword{internal}
