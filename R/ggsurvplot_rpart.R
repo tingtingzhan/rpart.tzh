@@ -32,9 +32,10 @@ ggsurvplot_rpart <- function(fit, ...) {
     ylab = deparse1(fit$terms[[2L]]))
   
   # @importFrom ggplot2 scale_y_continuous
+  # @importFrom scales label_percent
   #suppressMessages(
   #  p$plot <- p$plot + 
-  #    scale_y_continuous(labels = \(x) sprintf(fmt = '%.0f%%', 1e2*x))
+  #    scale_y_continuous(labels = label_percent())
   #)
   
   return(p)
