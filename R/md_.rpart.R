@@ -15,9 +15,7 @@
 #' Function [md_.rpart()] returns a \link[base]{character} \link[base]{vector}.
 #' 
 #' @examples
-#' library(rmd.tzh)
-#' library(rpart)
-#' list(
+#' library(rmd.tzh); list(
 #'  '`rpart`' = rpart(Kyphosis ~ Age + Number + Start, data = kyphosis, model = TRUE)
 #' ) |> render_(file = 'rpart')
 #' 

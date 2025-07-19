@@ -21,7 +21,6 @@ Function \link{risklev} returns a \link[base]{factor}.
 Function \link[rpart]{labels.rpart} (for S3 generic \link[base]{labels}) only captures the last branching information, which is not ideal.
 }
 \examples{
-library(rpart)
 rp = rpart(Kyphosis ~ Age + Number + Start, data = kyphosis, model = TRUE)
 rp |> prp_()
 rp |> risklev()

@@ -16,7 +16,6 @@ Kaplan-Meier curves based on recursive partitioning and regression trees \link[r
 }
 \examples{
 library(survival)
-library(rpart)
 rp = rpart(Surv(time, status) ~ age, data = veteran, maxdepth = 2L, model = TRUE)
 rp |> ggsurvplot_rpart()
 
