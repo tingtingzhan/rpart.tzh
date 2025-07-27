@@ -4,12 +4,10 @@
 \alias{md_.rpart}
 \title{Create Markdown Lines for \link[rpart]{rpart} Objects}
 \usage{
-\method{md_}{rpart}(x, xnm, ...)
+\method{md_}{rpart}(x, ...)
 }
 \arguments{
 \item{x}{\link[rpart]{rpart} object}
-
-\item{xnm}{..}
 
 \item{...}{..}
 }

@@ -7,8 +7,6 @@
 #' 
 #' @param x \link[rpart]{rpart} object
 #' 
-#' @param xnm ..
-#' 
 #' @param ... ..
 #' 
 #' @returns 
@@ -20,42 +18,24 @@
 #' ) |> render_(file = 'rpart')
 #' 
 #' @keywords internal
-#' @importFrom rmd.tzh md_
+#' @importFrom rmd.tzh md_ md_.default
+#' @importClassesFrom rmd.tzh md_lines
+#' @importFrom methods new
+#' @export md_.rpart
 #' @export
-md_.rpart <- function(x, xnm, ...) {
+md_.rpart <- function(x, ...) {
   
-  h <- attr(x, which = 'fig.height', exact = TRUE) %||% 6
-  w <- attr(x, which = 'fig.width', exact = TRUE) %||% 7
-  
-  fom <- x$terms
-  txt1 <- sprintf(
+  attr(x, which = 'text') <- sprintf(
     fmt = 'Recursive partitioning and regression tree for **`%s`** based on potential covariate(s) %s is provided by <u>**`R`**</u> package <u>**`rpart`**</u>. The data-driven partition, i.e., the collection of cutoff value(s), is based on %d observations.', 
-    deparse1(fom[[2L]]),
-    paste0('`', all.vars(fom[[3L]]), '`', collapse = ', '),
-    x$frame$n[1L])
+    x$terms[[2L]] |> deparse1(),
+    x$terms[[3L]] |> 
+      all.vars() |>
+      sprintf(fmt = '`%s`') |> 
+      paste(collapse = ', '),
+    x$frame$n[1L]
+  ) |> 
+    new(Class = 'md_lines', package = 'rpart')
   
-  model_ <- x$model
-  if (is.null(model_) || !is.data.frame(model_)) stop('Re-run `rpart` with `model = TRUE`')
-  y <- model_[[1L]]
-  # \link[rpart]{rpart} returned value `ret$y` is a \link[base]{matrix}, *not* \link[survival]{Surv}
-  # ret |> terms() |> attr(which = 'dataClasses', exact = TRUE) gives 'nmatrix.2'
+  md_.default(x, ...)
   
-  if (inherits(y, what = 'Surv')) {
-    txt2 <- 'Kaplan-Meier estimates and curves based on the partition branches are created by <u>**`R`**</u> package <u>**`survival`**</u>.'
-    KM <- c(
-      sprintf(fmt = '```{r fig.height = %.1f, fig.width = %.1f}', 4, 7), 
-      #sprintf(fmt = 'ggsurvplot_rpart(%s)', xnm), # too ugly!!
-      sprintf(fmt = 'ggKM.rpart(%s)', xnm), # ?survival.tzh::ggKM.rpart
-      '```'
-    )
-  } else txt2 <- KM <- NULL
-  
-  return(c(
-    paste(txt1, txt2),
-    '',
-    sprintf(fmt = '```{r fig.height = %.1f, fig.width = %.1f}', h, w), 
-    sprintf(fmt = 'rpart.tzh::prp_(%s)', xnm), 
-    '```',
-    KM
-  ))
 }  

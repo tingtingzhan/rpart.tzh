@@ -16,10 +16,9 @@
 #' 
 #' @examples
 #' rp = rpart(Kyphosis ~ Age + Number + Start, data = kyphosis, model = TRUE)
-#' rp |> prp_()
 #' rp |> risklev()
-#' rp |> ggsurvplot_rpart()
 #' 
+#' @keywords internal
 #' @export
 risklev <- function(object, ...) {
   
@@ -45,7 +44,10 @@ risklev <- function(object, ...) {
     #attr(risk, which = 'levels') <- sprintf(fmt = '%s (%.2g)', leaf_lab, leaf_y)[order(leaf_y)]
   }
   
-  attr(risk, which = 'levels') <- sprintf(fmt = '%.2g', sort.default(unique.default(y0)))
+  attr(risk, which = 'levels') <- y0 |>
+    unique.default() |> 
+    sort.default() |>
+    sprintf(fmt = '%.2g')
   
   return(risk)
   

@@ -12,8 +12,9 @@
 \item{...}{additional parameters, not currently in use}
 }
 \value{
-Function \link{nobs.rpart} returns an \link[base]{integer} scalar
+Function \code{\link[=nobs.rpart]{nobs.rpart()}} returns an \link[base]{integer} scalar
 }
 \description{
 Method dispatch for S3 generic \link[stats]{nobs}.
 }
+\keyword{internal}

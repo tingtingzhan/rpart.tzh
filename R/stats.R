@@ -9,8 +9,9 @@
 #' @param ... additional parameters, not currently in use
 #' 
 #' @returns 
-#' Function [nobs.rpart] returns an \link[base]{integer} scalar
+#' Function [nobs.rpart()] returns an \link[base]{integer} scalar
 #' 
+#' @keywords internal
 #' @importFrom stats nobs
 #' @export nobs.rpart
 #' @export
