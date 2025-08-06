@@ -25,7 +25,6 @@
 #' @keywords internal
 #' @importFrom grDevices hsv
 #' @importFrom rpart.plot prp
-#' @importFrom stats predict
 #' @export print.rpart
 #' @export
 print.rpart <- function(x, ...) {
