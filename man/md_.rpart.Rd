@@ -18,9 +18,9 @@ Function \code{\link[=md_.rpart]{md_.rpart()}} returns a \link[base]{character} 
 ..
 }
 \examples{
-library(rmd.tzh); list(
+list(
  '`rpart`' = rpart(Kyphosis ~ Age + Number + Start, data = kyphosis, model = TRUE)
-) |> render_(file = 'rpart')
+) |> rmd.tzh::render_(file = 'rpart')
 
 }
 \keyword{internal}
