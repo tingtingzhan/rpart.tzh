@@ -12,4 +12,9 @@ Language: en-US
 RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
 Depends: R (>= 4.5), rpart (== 4.1.24)
-Imports: methods, rpart.plot (== 3.1.3), rmd.tzh
+Imports: methods, 
+    rpart.plot (== 3.1.3), 
+    survival (== 3.8.3),
+    survival.tzh,
+    rmd.tzh
+Suggests: ggplot2

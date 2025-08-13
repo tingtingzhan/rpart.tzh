@@ -4,10 +4,12 @@
 \alias{md_.rpart}
 \title{Create Markdown Lines for \link[rpart]{rpart} Objects}
 \usage{
-\method{md_}{rpart}(x, ...)
+\method{md_}{rpart}(x, xnm, ...)
 }
 \arguments{
 \item{x}{\link[rpart]{rpart} object}
+
+\item{xnm}{..}
 
 \item{...}{..}
 }
@@ -18,8 +20,17 @@ Function \code{\link[=md_.rpart]{md_.rpart()}} returns a \link[base]{character} 
 ..
 }
 \examples{
-list(
- '`rpart`' = rpart(Kyphosis ~ Age + Number + Start, data = kyphosis, model = TRUE)
+library(survival.tzh)
+vet = survival::veteran |>
+ within.data.frame(expr = {
+  time = as.difftime(time, units = 'days')
+  os = Surv(time, status)
+ })
+
+library(ggplot2); list(
+ 'non survival' = rpart(Kyphosis ~ Age + Start, data = kyphosis, model = TRUE),
+ 'survival v1' = rpart(os ~ age, data = vet, maxdepth = 2L, model = TRUE),
+ 'survival v2' = rpart(Surv(time, status) ~ age, data = vet, maxdepth = 2L, model = TRUE)
 ) |> rmd.tzh::render_(file = 'rpart')
 
 }
