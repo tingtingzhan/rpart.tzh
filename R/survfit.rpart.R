@@ -14,7 +14,8 @@
 #'   survfit()
 #' 
 #' @keywords internal
-#' @importFrom survival survfit survfit.formula
+#' @importFrom survival survfit survfit.formula survdiff
+#' @importFrom rmd.tzh label_pvalue_sym
 #' @export survfit.rpart
 #' @export
 survfit.rpart <- function(formula, ...) {
@@ -40,17 +41,48 @@ survfit.rpart <- function(formula, ...) {
   
   if (is.symbol(ynm)) {
     names(d)[1L] <- as.character(ynm)
-    ret <- do.call(what = survfit.formula, args = list(
-      formula = eval(call(name = '~', ynm, quote(leafRisk))),
-      data = d))
+    fom <- call(name = '~', ynm, quote(leafRisk)) |> eval()
   } else {
-    ret <- survfit.formula(y ~ leafRisk)
-    ret$call$data <- d
+    fom <- (y ~ leafRisk)
   }
   
-  return(ret)
+  sf <- list(formula = fom, data = d) |> 
+    do.call(what = survfit.formula, args = _)
+  
+  sdf <- list(formula = fom, data = d) |> 
+    do.call(what = survdiff, args = _)
+  attr(sf, which = 'survdiff') <- sdf$pvalue |> 
+    label_pvalue_sym(add_p = TRUE)() |> 
+    paste('Log-rank (unweighted)')
+  
+  class(sf) <- c('survfit.rpart', class(sf)) |> 
+    unique.default()
+  return(sf)
   
 }
 
 
 
+#' @title [autoplot.survfit.rpart()]
+#' 
+#' @description
+#' ..
+#' 
+#' @param object returned value of function [survfit.rpart()]
+#' 
+#' @param ... ..
+#' 
+#' @keywords internal
+#' @importFrom ggplot2 autoplot labs
+#' @importFrom survival.tzh autoplot.survfit
+#' @method autoplot survfit.rpart
+#' @export autoplot.survfit.rpart
+#' @export
+autoplot.survfit.rpart <- function(object, ...) {
+  
+  autoplot.survfit(object, ...) +
+    labs(
+      caption = attr(object, which = 'survdiff', exact = TRUE)
+    )
+
+}

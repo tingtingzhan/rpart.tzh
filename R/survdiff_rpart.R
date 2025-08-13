@@ -15,6 +15,8 @@
 #' @export
 survdiff_rpart <- function(object, ...) {
   
+  .Defunct(msg = 'inside [survfit.rpart()] now')
+  
   model_ <- object$model
   if (is.null(model_) || !is.data.frame(model_)) stop('Re-run `rpart` with `model = TRUE`')
   y <- model_[[1L]] # units.Surv carries hahaha!!

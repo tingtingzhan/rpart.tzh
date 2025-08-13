@@ -15,17 +15,18 @@
 #' Function [md_.rpart()] returns a \link[base]{character} \link[base]{vector}.
 #' 
 #' @examples
-#' library(survival.tzh)
+#' library(survival)
 #' vet = survival::veteran |>
 #'  within.data.frame(expr = {
 #'   time = as.difftime(time, units = 'days')
 #'   os = Surv(time, status)
 #'  })
 #' 
-#' library(ggplot2); list(
+#' list(
 #'  'non survival' = rpart(Kyphosis ~ Age + Start, data = kyphosis, model = TRUE),
-#'  'survival v1' = rpart(os ~ age, data = vet, maxdepth = 2L, model = TRUE),
-#'  'survival v2' = rpart(Surv(time, status) ~ age, data = vet, maxdepth = 2L, model = TRUE)
+#'  'survival, `os`' = rpart(os ~ age, data = vet, maxdepth = 2L, model = TRUE),
+#'  'survival, `Surv(time, status)`' = rpart(Surv(time, status) ~ age, data = vet, 
+#'    maxdepth = 2L, model = TRUE)
 #' ) |> rmd.tzh::render_(file = 'rpart')
 #' 
 #' @keywords internal
@@ -53,8 +54,7 @@ md_.rpart <- function(x, xnm, ...) {
       title = 'Classification and Regression Trees',
       year = '1984',
       edition = '1',
-      publisher = 'Chapman and Hall/CRC',
-      address = 'New York',
+      publisher = 'Chapman and Hall/CRC', address = 'New York',
       doi = '10.1201/9781315139470'
     ))
   
@@ -64,17 +64,20 @@ md_.rpart <- function(x, xnm, ...) {
     survfit.rpart()
   
   if (length(sf)) {
+    
     z21 <- '@KaplanMeier58 estimates and curves based on the partition branches are created by <u>**`R`**</u> package <u>**`survival`**</u>.' |>
       new(Class = 'md_lines', package = 'survival', bibentry = KaplanMeier58())
+    
     z22 <- c(
-      '```{r, dev = \'ragg_png\'}',
+      '```{r}',
       '#| echo: false',
-      xnm |> sprintf(fmt = 'p = (%s) |> survfit.rpart() |> autoplot.survfit()'),
-      xnm |> sprintf(fmt = 'sd = (%s) |> survdiff_rpart(object)'),
-      'p + ggplot2::labs(caption = sd$pvalue |> label_pvalue_sym(add_p = TRUE)() |> paste(\'Log-rank (unweighted)\'))',
+      '#| dev: \'ragg_png\'', # unicode support!!
+      xnm |> sprintf(fmt = '(%s) |> survfit.rpart() |> autoplot.survfit.rpart()'),
       '```'
     ) |> new(Class = 'md_lines')
+    
     z2 <- c(z21, z22)
+    
   } else z2 <- NULL
   
   c(z1, z2)

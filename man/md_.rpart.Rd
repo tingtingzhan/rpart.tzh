@@ -20,17 +20,18 @@ Function \code{\link[=md_.rpart]{md_.rpart()}} returns a \link[base]{character} 
 ..
 }
 \examples{
-library(survival.tzh)
+library(survival)
 vet = survival::veteran |>
  within.data.frame(expr = {
   time = as.difftime(time, units = 'days')
   os = Surv(time, status)
  })
 
-library(ggplot2); list(
+list(
  'non survival' = rpart(Kyphosis ~ Age + Start, data = kyphosis, model = TRUE),
- 'survival v1' = rpart(os ~ age, data = vet, maxdepth = 2L, model = TRUE),
- 'survival v2' = rpart(Surv(time, status) ~ age, data = vet, maxdepth = 2L, model = TRUE)
+ 'survival, `os`' = rpart(os ~ age, data = vet, maxdepth = 2L, model = TRUE),
+ 'survival, `Surv(time, status)`' = rpart(Surv(time, status) ~ age, data = vet, 
+   maxdepth = 2L, model = TRUE)
 ) |> rmd.tzh::render_(file = 'rpart')
 
 }
