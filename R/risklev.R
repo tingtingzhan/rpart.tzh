@@ -9,15 +9,14 @@
 #' @param ... ..
 #' 
 #' @returns 
-#' Function [risklev] returns a \link[base]{factor}.
+#' Function [risklev()] returns a \link[base]{factor}.
 #' 
 #' @note
 #' Function \link[rpart]{labels.rpart} (for S3 generic \link[base]{labels}) only captures the last branching information, which is not ideal.
 #' 
 #' @examples
-#' rp = rpart(Kyphosis ~ Age + Number + Start, data = kyphosis, model = TRUE)
-#' rp |> risklev()
-#' 
+#' rpart(Kyphosis ~ Age + Start, data = kyphosis) |> 
+#'  risklev()
 #' @keywords internal
 #' @export
 risklev <- function(object, ...) {

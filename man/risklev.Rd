@@ -12,7 +12,7 @@ risklev(object, ...)
 \item{...}{..}
 }
 \value{
-Function \link{risklev} returns a \link[base]{factor}.
+Function \code{\link[=risklev]{risklev()}} returns a \link[base]{factor}.
 }
 \description{
 ..
@@ -21,8 +21,7 @@ Function \link{risklev} returns a \link[base]{factor}.
 Function \link[rpart]{labels.rpart} (for S3 generic \link[base]{labels}) only captures the last branching information, which is not ideal.
 }
 \examples{
-rp = rpart(Kyphosis ~ Age + Number + Start, data = kyphosis, model = TRUE)
-rp |> risklev()
-
+rpart(Kyphosis ~ Age + Start, data = kyphosis) |> 
+ risklev()
 }
 \keyword{internal}
