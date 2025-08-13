@@ -3,7 +3,7 @@
 #' @title My favorite customization of \link[rpart.plot]{prp}
 #' 
 #' @description
-#' Overwrites function `rpart:::print.rpart` !!!
+#' Do NOT overwrites function `rpart:::print.rpart()`.
 #' 
 #' @param x \link[rpart]{rpart} object
 #' 
@@ -15,7 +15,7 @@
 #' Another option is `?partykit::plot.party`, which seems to requires numeric endpoint and/or branching criterion (?)
 #' 
 #' @returns 
-#' Function [print.rpart()] does not have a returned value.
+#' Function [prp_()] does not have a returned value.
 #' 
 #' @references 
 #' \url{http://www.di.fc.ul.pt/~jpn/r/tree/tree.html}
@@ -25,9 +25,8 @@
 #' @keywords internal
 #' @importFrom grDevices hsv
 #' @importFrom rpart.plot prp
-#' @export print.rpart
 #' @export
-print.rpart <- function(x, ...) {
+prp_ <- function(x, ...) {
   
   yval <- as.factor(x$frame$yval) # not just leaves, branch color depends on nodes.
   # red (high risk) to green (low risk)

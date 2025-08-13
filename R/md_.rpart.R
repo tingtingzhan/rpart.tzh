@@ -39,7 +39,7 @@
 #' @export
 md_.rpart <- function(x, xnm, ...) {
   
-  attr(x, which = 'text') <- sprintf(
+  z1 <- sprintf(
     fmt = 'Recursive partitioning and regression tree [@Breiman84] for **`%s`** based on potential covariate(s) %s is provided by <u>**`R`**</u> package <u>**`rpart`**</u>. The data-driven partition, i.e., the collection of cutoff value(s), is based on %d observations.', 
     x$terms[[2L]] |> deparse1(),
     x$terms[[3L]] |> 
@@ -58,17 +58,22 @@ md_.rpart <- function(x, xnm, ...) {
       doi = '10.1201/9781315139470'
     ))
   
-  z1 <- md_.default(x, xnm = xnm, ...)
+  z2 <- c(
+    '```{r}',
+    '#| echo: false',
+    xnm |> sprintf(fmt = 'prp_(%s)'),
+    '```'
+  ) |> new(Class = 'md_lines')
   
   sf <- x |> 
     survfit.rpart()
   
   if (length(sf)) {
     
-    z21 <- '@KaplanMeier58 estimates and curves based on the partition branches are created by <u>**`R`**</u> package <u>**`survival`**</u>.' |>
+    z31 <- '@KaplanMeier58 estimates and curves based on the partition branches are created by <u>**`R`**</u> package <u>**`survival`**</u>.' |>
       new(Class = 'md_lines', package = 'survival', bibentry = KaplanMeier58())
     
-    z22 <- c(
+    z32 <- c(
       '```{r}',
       '#| echo: false',
       '#| dev: \'ragg_png\'', # unicode support!!
@@ -76,10 +81,10 @@ md_.rpart <- function(x, xnm, ...) {
       '```'
     ) |> new(Class = 'md_lines')
     
-    z2 <- c(z21, z22)
+    z3 <- c(z31, z32)
     
-  } else z2 <- NULL
+  } else z3 <- NULL
   
-  c(z1, z2)
+  c(z1, z2, z3)
   
 }  
