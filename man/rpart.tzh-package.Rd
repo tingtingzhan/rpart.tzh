@@ -16,3 +16,4 @@ Users are encouraged to get started with the vignettes.
 \strong{Maintainer}: Tingting Zhan \email{tingtingzhan@gmail.com}
 
 }
+\keyword{internal}
