@@ -32,7 +32,7 @@ list(
  'survival, `os`' = rpart(os ~ age, data = vet, maxdepth = 2L, model = TRUE),
  'survival, `Surv(time, status)`' = rpart(Surv(time, status) ~ age, data = vet, 
    maxdepth = 2L, model = TRUE)
-) |> rmd.tzh::render_(file = 'rpart')
+) |> fastmd::render_(file = 'rpart')
 
 }
 \keyword{internal}

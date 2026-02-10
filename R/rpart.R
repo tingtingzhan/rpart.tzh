@@ -42,7 +42,7 @@ nobs.rpart <- function(object, ...) object$frame$n[1L]
 #' 
 #' @keywords internal
 #' @importFrom survival survfit survfit.formula survdiff
-#' @importFrom rmd.tzh label_pvalue_sym
+#' @importFrom fastmd label_pvalue_sym
 #' @export survfit.rpart
 #' @export
 survfit.rpart <- function(formula, ...) {
@@ -150,11 +150,11 @@ autoplot.survfit.rpart <- function(object, ...) {
 #'  'survival, `os`' = rpart(os ~ age, data = vet, maxdepth = 2L, model = TRUE),
 #'  'survival, `Surv(time, status)`' = rpart(Surv(time, status) ~ age, data = vet, 
 #'    maxdepth = 2L, model = TRUE)
-#' ) |> rmd.tzh::render_(file = 'rpart')
+#' ) |> fastmd::render_(file = 'rpart')
 #' 
 #' @keywords internal
-#' @importFrom rmd.tzh md_ md_.default
-#' @importClassesFrom rmd.tzh md_lines
+#' @importFrom fastmd md_ md_.default
+#' @importClassesFrom fastmd md_lines
 #' @importFrom survival.tzh KaplanMeier58
 #' @importFrom methods new
 #' @importFrom utils bibentry
