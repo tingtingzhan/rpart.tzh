@@ -157,7 +157,6 @@ autoplot.survfit.rpart <- function(object, ...) {
 #' @importClassesFrom fastmd md_lines
 #' @importFrom survival.tzh .kaplan_meier58
 #' @importFrom methods new
-#' @importFrom utils bibentry
 #' @export md_.rpart
 #' @export
 md_.rpart <- function(x, xnm, ...) {

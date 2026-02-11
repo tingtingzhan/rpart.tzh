@@ -3,6 +3,7 @@
 #' @title rpart bibs
 #' 
 #' @keywords internal
+#' @importFrom utils bibentry
 #' @name rpart_bib
 #' @export
 .breiman84 <- \() {
