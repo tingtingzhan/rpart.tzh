@@ -155,7 +155,7 @@ autoplot.survfit.rpart <- function(object, ...) {
 #' @keywords internal
 #' @importFrom fastmd md_ md_.default
 #' @importClassesFrom fastmd md_lines
-#' @importFrom survival.tzh KaplanMeier58
+#' @importFrom survival.tzh .kaplan_meier58
 #' @importFrom methods new
 #' @importFrom utils bibentry
 #' @export md_.rpart
@@ -171,15 +171,7 @@ md_.rpart <- function(x, xnm, ...) {
       paste(collapse = ', '),
     x$frame$n[1L]
   ) |> 
-    new(Class = 'md_lines', package = 'rpart', bibentry = bibentry(
-      bibtype = 'Book', key = 'Breiman84',
-      author = c('Leo Breiman', 'Jerome Friedman', 'Richard A. Olshen', 'Charles J. Stone'),
-      title = 'Classification and Regression Trees',
-      year = '1984',
-      edition = '1',
-      publisher = 'Chapman and Hall/CRC', address = 'New York',
-      doi = '10.1201/9781315139470'
-    ))
+    new(Class = 'md_lines', package = 'rpart', bibentry = .breiman84())
   
   z2 <- c(
     '```{r}',
@@ -194,7 +186,7 @@ md_.rpart <- function(x, xnm, ...) {
   if (length(sf)) {
     
     z31 <- '@KaplanMeier58 estimates and curves based on the partition branches are created by <u>**`R`**</u> package <u>**`survival`**</u>.' |>
-      new(Class = 'md_lines', package = 'survival', bibentry = KaplanMeier58())
+      new(Class = 'md_lines', package = 'survival', bibentry = .kaplan_meier58())
     
     z32 <- c(
       '```{r}',
