@@ -33,18 +33,19 @@ prp_ <- function(x, ...) {
   cols <- hsv(h = seq.int(.36, 0, length.out = length(attr(yval, which = 'levels', exact = TRUE))))[unclass(yval)]
   # see ?rattle::fancyRpartPlot for further tunings
   
-  suppressWarnings(prp(
-    x, 
-    main = deparse1(x$terms[[2L]]),
-    type = 4L, 
-    branch.col = cols, 
-    box.col = cols, 
-    extra = 101, 
-    under = TRUE, 
-    branch.lwd = 2.5, 
-    varlen = 0L, 
-    faclen = 0L
-  ))
+  x |>
+    prp(
+      main = deparse1(x$terms[[2L]]),
+      type = 4L, 
+      branch.col = cols, 
+      box.col = cols, 
+      extra = 101, 
+      under = TRUE, 
+      branch.lwd = 2.5, 
+      varlen = 0L, 
+      faclen = 0L
+    ) |>
+    suppressWarnings()
 
   return(invisible()) # ?rpart.plot::prp returned object is not usable directly
   

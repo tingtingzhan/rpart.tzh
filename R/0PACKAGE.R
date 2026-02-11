@@ -2,6 +2,7 @@
 
 
 #' @import rpart
+#' @import stats
 #' 
 #' @note
 #' Help files of individual functions are intentionally suppressed in the `pdf` manual.

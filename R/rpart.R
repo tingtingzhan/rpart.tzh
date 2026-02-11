@@ -13,7 +13,6 @@
 #' Function [nobs.rpart()] returns an \link[base]{integer} scalar.
 #' 
 #' @keywords internal
-#' @importFrom stats nobs
 #' @export nobs.rpart
 #' @export
 nobs.rpart <- function(object, ...) object$frame$n[1L]
@@ -190,6 +189,7 @@ md_.rpart <- function(x, xnm, ...) {
     z32 <- c(
       '```{r}',
       '#| echo: false',
+      '#| warning: false',
       '#| dev: \'ragg_png\'', # unicode support!!
       xnm |> sprintf(fmt = '(%s) |> survfit.rpart() |> autoplot.survfit.rpart()'),
       '```'
