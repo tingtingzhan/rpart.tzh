@@ -3,13 +3,18 @@
 #' @title rpart bibs
 #' 
 #' @keywords internal
-#' @importFrom utils bibentry
+#' @importFrom utils bibentry person
 #' @name rpart_bib
 #' @export
 .breiman84 <- \() {
   bibentry(
     bibtype = 'Book', key = 'Breiman84',
-    author = c('Leo Breiman', 'Jerome Friedman', 'Richard A. Olshen', 'Charles J. Stone'),
+    author = c(
+      person(given = 'Leo', family = 'Breiman'), 
+      person(given = 'Jerome', family = 'Friedman'), 
+      person(given = c('Richard', 'A.'), family = 'Olshen'), 
+      person(given = c('Charles', 'J.'), family = 'Stone')
+    ),
     title = 'Classification and Regression Trees',
     year = '1984',
     edition = '1',
