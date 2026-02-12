@@ -2,12 +2,12 @@
 % Please edit documentation in R/rpart.R
 \name{nobs.rpart}
 \alias{nobs.rpart}
-\title{Sample Size in \link[rpart]{rpart} Object}
+\title{Sample Size in \link[rpart]{rpart.object}}
 \usage{
 \method{nobs}{rpart}(object, ...)
 }
 \arguments{
-\item{object}{\link[rpart]{rpart} object}
+\item{object}{an \link[rpart]{rpart.object}}
 
 \item{...}{additional parameters, not currently in use}
 }

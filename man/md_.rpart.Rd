@@ -2,12 +2,12 @@
 % Please edit documentation in R/rpart.R
 \name{md_.rpart}
 \alias{md_.rpart}
-\title{Create Markdown Lines for \link[rpart]{rpart} Objects}
+\title{Create Markdown Lines for \link[rpart]{rpart.object}}
 \usage{
 \method{md_}{rpart}(x, xnm, ...)
 }
 \arguments{
-\item{x}{\link[rpart]{rpart} object}
+\item{x}{an \link[rpart]{rpart.object}}
 
 \item{xnm}{\link[base]{character} scalar}
 
@@ -29,9 +29,7 @@ vet = survival::veteran |>
 
 list(
  'non survival' = rpart(Kyphosis ~ Age + Start, data = kyphosis, model = TRUE),
- 'survival, `os`' = rpart(os ~ age, data = vet, maxdepth = 2L, model = TRUE),
- 'survival, `Surv(time, status)`' = rpart(Surv(time, status) ~ age, data = vet, 
-   maxdepth = 2L, model = TRUE)
+ 'survival' = rpart(os ~ age, data = vet, maxdepth = 2L, model = TRUE)
 ) |> fastmd::render_(file = 'rpart')
 
 }

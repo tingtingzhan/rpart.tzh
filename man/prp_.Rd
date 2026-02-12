@@ -7,7 +7,7 @@
 prp_(x, ...)
 }
 \arguments{
-\item{x}{\link[rpart]{rpart} object}
+\item{x}{an \link[rpart]{rpart.object}}
 
 \item{...}{additional parameters, currently of no use}
 }
@@ -18,7 +18,7 @@ Function \code{\link[=prp_]{prp_()}} does not have a returned value.
 Do NOT overwrites function \code{rpart:::print.rpart()}.
 }
 \note{
-Function \code{ggdendro::ggdendrogram} will plot \link[rpart]{rpart} object, but not very good.
+Function \code{ggdendro::ggdendrogram} will plot \link[rpart]{rpart.object}, but not very good.
 
 Another option is \code{?partykit::plot.party}, which seems to requires numeric endpoint and/or branching criterion (?)
 }

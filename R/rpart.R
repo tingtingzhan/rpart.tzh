@@ -1,11 +1,11 @@
 
 
-#' @title Sample Size in \link[rpart]{rpart} Object
+#' @title Sample Size in \link[rpart]{rpart.object}
 #' 
 #' @description 
 #' Method dispatch for S3 generic \link[stats]{nobs}.
 #' 
-#' @param object \link[rpart]{rpart} object
+#' @param object an \link[rpart]{rpart.object}
 #' 
 #' @param ... additional parameters, not currently in use
 #' 
@@ -20,21 +20,44 @@ nobs.rpart <- function(object, ...) object$frame$n[1L]
 
 
 
+#' @title Does an \link[rpart]{rpart.object} Has a \link[survival]{Surv} Endpoint?
+#' 
+#' @param object an \link[rpart]{rpart.object}
+#' 
+#' @keywords internal
+#' @importFrom survival.tzh is.Surv.endpoint
+#' @method is.Surv.endpoint rpart
+#' @export is.Surv.endpoint.rpart
+#' @export
+is.Surv.endpoint.rpart <- function(object) {
+  # 2025-01-06: ?rpart::rpart.exp changes 'Surv' endpoint `object$y` to 'matrix'
+  # I need to read more (about why this is necessary), before writing to the authors
+  m <- object$model
+  if (is.null(m) || !is.data.frame(m)) stop('Re-run with `rpart(., model = TRUE)`')
+  y <- m[[1L]] # units.Surv carries hahaha!!
+  inherits(y, what = 'Surv')
+}
 
-#' @title Survival Curves based on \link[rpart]{rpart}
+
+
+
+
+#' @title Kaplan-Meier Curves of \link[rpart]{rpart.object}
 #' 
 #' @description
-#' ..
+#' Kaplan-Meier curves of an \link[rpart]{rpart.object}, 
+#' if the endpoint is a \link[survival]{Surv} object.
 #' 
-#' @param formula \link[rpart]{rpart}
+#' @param formula an \link[rpart]{rpart.object}
 #' 
-#' @param fmt \link[base]{character} scalar
+#' @param fmt \link[base]{character} scalar, 
+#' string formatting of the leaf-risk,
+#' see function \link[base]{sprintf}
 #' 
-#' @param ... ..
+#' @param ... additional parameters of function \link[survival]{survfit.formula}
 #' 
 #' @returns
-#' Function [survfit.rpart()] returns a `'survfit.rpart'` object,
-#' an derived class of `S3` class \link[survival]{survfit}.
+#' The `S3` method [survfit.rpart()] returns a \link[survival]{survfit.object}.
 #' 
 #' @examples
 #' library(survival)
@@ -42,83 +65,116 @@ nobs.rpart <- function(object, ...) object$frame$n[1L]
 #'   survfit()
 #' 
 #' @keywords internal
-#' @importFrom survival survfit survfit.formula survdiff
-#' @importFrom fastmd label_pvalue_sym
+#' @importFrom survival survfit survfit.formula
+#' @importFrom survival.tzh units.Surv
 #' @export survfit.rpart
 #' @export
 survfit.rpart <- function(formula, fmt = '%.2g', ...) {
   
   object <- formula; formula <- NULL
   
-  # 2025-01-06: ?rpart::rpart.exp changes 'Surv' endpoint `object$y` to 'matrix'
-  # I need to read more (about why this is necessary), before writing to the authors
+  if (!is.Surv.endpoint.rpart(object)) return(invisible()) # exception handling
   
-  model_ <- object$model
-  if (is.null(model_) || !is.data.frame(model_)) stop('Re-run with `rpart(., model = TRUE)`')
-  y <- model_[[1L]] # units.Surv carries hahaha!!
-  if (!inherits(y, what = 'Surv')) return(invisible()) # exception handling
-  # since packageDate('rpart') # 2025-01-06
-  # \link[rpart]{rpart} return does not contain `y` even if `y = TRUE` is called ..
-  # x |> terms() |> attr(which = 'dataClasses', exact = TRUE) gives 'nmatrix.2', not 'Surv'
-  
-  leafRisk <- object |> 
+  leaf <- object |> 
     predict(type = 'vector') |> # ?rpart:::predict.rpart
     sprintf(fmt = fmt) |> 
     as.factor() # silly but works!!
   
-  d <- data.frame(y = y, leafRisk = leafRisk)
-  ynm <- names(model_)[1L] |>
-    str2lang()
+  sf <- survfit.formula(object$model[[1L]] ~ leaf, ...)
+  attr(sf, which = 'units') <- units.Surv(object$model[[1L]])
+  sf$call$formula[[2L]] <- object$call$formula[[2L]] # y-axis label
   
-  if (is.symbol(ynm)) {
-    names(d)[1L] <- as.character(ynm)
-    fom <- call(name = '~', ynm, quote(leafRisk)) |> eval()
-  } else {
-    fom <- (y ~ leafRisk)
-  }
-  
-  sf <- list(formula = fom, data = d) |> 
-    do.call(what = survfit.formula, args = _)
-  
-  sdf <- list(formula = fom, data = d) |> 
-    do.call(what = survdiff, args = _)
-  attr(sf, which = 'survdiff') <- sdf$pvalue |> 
-    label_pvalue_sym(add_p = TRUE)() |> 
-    paste('Log-rank (unweighted)')
-  
-  class(sf) <- c('survfit.rpart', class(sf)) |> 
-    unique.default()
   return(sf)
   
 }
 
 
 
-#' @title [autoplot.survfit.rpart()]
+
+
+
+
+#' @title Test Survival Curve Differences of \link[rpart]{rpart.object}
+#' 
+#' @description
+#' Test survival curve differences of an \link[rpart]{rpart.object}, 
+#' if the endpoint is a \link[survival]{Surv} object.
+#' 
+#' @param object an \link[rpart]{rpart.object}
+#' 
+#' @param fmt \link[base]{character} scalar, 
+#' string formatting of the leaf-risk,
+#' see function \link[base]{sprintf}
+#' 
+#' @param ... additional parameters of function \link[survival]{survdiff}
+#' 
+#' @examples
+#' library(survival.tzh)
+#' rpart(Surv(time, status) ~ age, data = veteran, maxdepth = 2L, model = TRUE) |> 
+#'  survdiff_()
+#' 
+#' @importFrom survival.tzh survdiff_
+#' @importFrom survival survdiff
+#' @export survdiff_.rpart
+#' @export
+survdiff_.rpart <- function(object, fmt = '%.2g', ...) {
+
+  if (!is.Surv.endpoint.rpart(object)) return(invisible()) # exception handling
+  
+  leaf <- object |> 
+    predict(type = 'vector') |> # ?rpart:::predict.rpart
+    sprintf(fmt = fmt) |> 
+    as.factor() # silly but works!!
+  
+  sdf <- survdiff(object$model[[1L]] ~ leaf, ...)
+  sdf$call$formula[[2L]] <- object$call$formula[[2L]] # y-axis label
+  
+  return(sdf)
+} 
+
+
+
+
+
+#' @title Creates ggplot from \link[rpart]{rpart.object}
 #' 
 #' @description
 #' ..
 #' 
-#' @param object returned value of function [survfit.rpart()]
+#' @param object an \link[rpart]{rpart.object}
 #' 
-#' @param ... ..
+#' @param ... additional parameters of function \link[survival.tzh]{autoplot.survfit}
 #' 
 #' @returns
-#' Function [autoplot.survfit.rpart()] returns a \link[ggplot2]{ggplot} object.
+#' Function [autoplot.rpart()] returns a \link[ggplot2]{ggplot} object.
 #' 
 #' @keywords internal
 #' @importFrom ggplot2 autoplot labs
 #' @importFrom survival.tzh autoplot.survfit
-#' @method autoplot survfit.rpart
-#' @export autoplot.survfit.rpart
+#' @importFrom fastmd label_pvalue_sym
+#' @export autoplot.rpart
 #' @export
-autoplot.survfit.rpart <- function(object, ...) {
+autoplot.rpart <- function(object, ...) {
   
-  autoplot.survfit(object, ...) +
-    labs(
-      caption = attr(object, which = 'survdiff', exact = TRUE)
-    )
-  
+  if (is.Surv.endpoint.rpart(object)) {
+    
+    sdf_pval <- object |>
+      survdiff_.rpart() |>
+      getElement(name = 'pvalue') |>
+      label_pvalue_sym(add_p = TRUE)() |> 
+      paste('Log-rank (unweighted)')
+    # maybe use ?survival.tzh:::desc_survdiff_rho in future
+    
+    p <- object |> 
+      survfit.rpart() |>
+      autoplot.survfit(...) +
+      labs(caption = sdf_pval)
+    return(p)
+
+  }
+    
+  return(invisible())
+
 }
 
 
@@ -127,12 +183,12 @@ autoplot.survfit.rpart <- function(object, ...) {
 
 
 
-#' @title Create Markdown Lines for \link[rpart]{rpart} Objects
+#' @title Create Markdown Lines for \link[rpart]{rpart.object}
 #' 
 #' @description
 #' ..
 #' 
-#' @param x \link[rpart]{rpart} object
+#' @param x an \link[rpart]{rpart.object}
 #' 
 #' @param xnm \link[base]{character} scalar
 #' 
@@ -151,9 +207,7 @@ autoplot.survfit.rpart <- function(object, ...) {
 #' 
 #' list(
 #'  'non survival' = rpart(Kyphosis ~ Age + Start, data = kyphosis, model = TRUE),
-#'  'survival, `os`' = rpart(os ~ age, data = vet, maxdepth = 2L, model = TRUE),
-#'  'survival, `Surv(time, status)`' = rpart(Surv(time, status) ~ age, data = vet, 
-#'    maxdepth = 2L, model = TRUE)
+#'  'survival' = rpart(os ~ age, data = vet, maxdepth = 2L, model = TRUE)
 #' ) |> fastmd::render_(file = 'rpart')
 #' 
 #' @keywords internal
@@ -183,10 +237,11 @@ md_.rpart <- function(x, xnm, ...) {
     '```'
   ) |> new(Class = 'md_lines')
   
-  sf <- x |> 
-    survfit.rpart()
-  
-  if (length(sf)) {
+  if (is.Surv.endpoint.rpart(x)) {
+    
+    # um.. not ready to use
+    # ?survival.tzh::md_.survfit
+    # yet..
     
     z31 <- '@KaplanMeier58 estimates and curves based on the partition branches are created by <u>**`R`**</u> package <u>**`survival`**</u>.' |>
       new(Class = 'md_lines', package = 'survival', bibentry = .kaplan_meier58())
@@ -196,7 +251,7 @@ md_.rpart <- function(x, xnm, ...) {
       '#| echo: false',
       '#| warning: false',
       '#| dev: \'ragg_png\'', # unicode support!!
-      xnm |> sprintf(fmt = '(%s) |> survfit.rpart() |> autoplot.survfit.rpart()'),
+      xnm |> sprintf(fmt = '(%s) |> autoplot.rpart()'),
       '```'
     ) |> new(Class = 'md_lines')
     

@@ -2,23 +2,25 @@
 % Please edit documentation in R/rpart.R
 \name{survfit.rpart}
 \alias{survfit.rpart}
-\title{Survival Curves based on \link[rpart]{rpart}}
+\title{Kaplan-Meier Curves of \link[rpart]{rpart.object}}
 \usage{
 \method{survfit}{rpart}(formula, fmt = "\%.2g", ...)
 }
 \arguments{
-\item{formula}{\link[rpart]{rpart}}
+\item{formula}{an \link[rpart]{rpart.object}}
 
-\item{fmt}{\link[base]{character} scalar}
+\item{fmt}{\link[base]{character} scalar,
+string formatting of the leaf-risk,
+see function \link[base]{sprintf}}
 
-\item{...}{..}
+\item{...}{additional parameters of function \link[survival]{survfit.formula}}
 }
 \value{
-Function \code{\link[=survfit.rpart]{survfit.rpart()}} returns a \code{'survfit.rpart'} object,
-an derived class of \code{S3} class \link[survival]{survfit}.
+The \code{S3} method \code{\link[=survfit.rpart]{survfit.rpart()}} returns a \link[survival]{survfit.object}.
 }
 \description{
-..
+Kaplan-Meier curves of an \link[rpart]{rpart.object},
+if the endpoint is a \link[survival]{Surv} object.
 }
 \examples{
 library(survival)
