@@ -4,10 +4,12 @@
 \alias{survfit.rpart}
 \title{Survival Curves based on \link[rpart]{rpart}}
 \usage{
-\method{survfit}{rpart}(formula, ...)
+\method{survfit}{rpart}(formula, fmt = "\%.2g", ...)
 }
 \arguments{
 \item{formula}{\link[rpart]{rpart}}
+
+\item{fmt}{\link[base]{character} scalar}
 
 \item{...}{..}
 }
