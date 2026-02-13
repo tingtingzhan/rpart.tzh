@@ -66,7 +66,7 @@ is.Surv.endpoint.rpart <- function(object) {
 #' 
 #' @keywords internal
 #' @importFrom survival survfit survfit.formula
-#' @importFrom survival.tzh units.Surv
+#' @importFrom survival.tzh units.Surv more_units<-
 #' @export survfit.rpart
 #' @export
 survfit.rpart <- function(formula, fmt = '%.2g', ...) {
@@ -81,7 +81,7 @@ survfit.rpart <- function(formula, fmt = '%.2g', ...) {
     as.factor() # silly but works!!
   
   sf <- survfit.formula(object$model[[1L]] ~ leaf, ...)
-  attr(sf, which = 'units') <- units.Surv(object$model[[1L]])
+  more_units(sf) <- units.Surv(object$model[[1L]]) # survival.tzh::`more_units<-.survfit`
   sf$call$formula[[2L]] <- object$call$formula[[2L]] # y-axis label
   
   return(sf)
@@ -250,6 +250,9 @@ md_.rpart <- function(x, xnm, ...) {
       '```{r}',
       '#| echo: false',
       '#| warning: false',
+      '#| message: false',
+      # to suppress the ggplot-rendering message 
+      # 'Dont know how to automatically pick scale for object of type <difftime>'
       '#| dev: \'ragg_png\'', # unicode support!!
       xnm |> sprintf(fmt = '(%s) |> autoplot.rpart()'),
       '```'
