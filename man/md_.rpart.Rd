@@ -30,7 +30,7 @@ vet = survival::veteran |>
 list(
  'non survival' = rpart(Kyphosis ~ Age + Start, data = kyphosis, model = TRUE),
  'survival' = rpart(os ~ age, data = vet, maxdepth = 2L, model = TRUE)
-) |> fastmd::render_(file = 'rpart')
+) |> fastmd::render2html(file = 'rpart')
 
 }
 \keyword{internal}
