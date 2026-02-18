@@ -211,10 +211,9 @@ autoplot.rpart <- function(object, ...) {
 #' ) |> fastmd::render2html(file = 'rpart')
 #' 
 #' @keywords internal
-#' @importFrom fastmd md_ md_.default
+#' @importFrom fastmd md_ md_.default md_autoplot_
 #' @importClassesFrom fastmd md_lines
 #' @importFrom survival.tzh .kaplan_meier58
-#' @importFrom methods new
 #' @export md_.rpart
 #' @export
 md_.rpart <- function(x, xnm, ...) {
@@ -232,7 +231,6 @@ md_.rpart <- function(x, xnm, ...) {
   
   z2 <- c(
     '```{r}',
-    '#| echo: false',
     xnm |> sprintf(fmt = 'prp_(%s)'),
     '```'
   ) |> new(Class = 'md_lines')
@@ -246,17 +244,7 @@ md_.rpart <- function(x, xnm, ...) {
     z31 <- '@KaplanMeier58 estimates and curves based on the partition branches are created by <u>**`R`**</u> package <u>**`survival`**</u>.' |>
       new(Class = 'md_lines', package = 'survival', bibentry = .kaplan_meier58())
     
-    z32 <- c(
-      '```{r}',
-      '#| echo: false',
-      '#| warning: false',
-      '#| message: false',
-      # to suppress the ggplot-rendering message 
-      # 'Dont know how to automatically pick scale for object of type <difftime>'
-      '#| dev: \'ragg_png\'', # unicode support!!
-      xnm |> sprintf(fmt = '(%s) |> autoplot.rpart()'),
-      '```'
-    ) |> new(Class = 'md_lines')
+    z32 <- md_autoplot_(x = x, xnm = xnm, ...)
     
     z3 <- c(z31, z32)
     
