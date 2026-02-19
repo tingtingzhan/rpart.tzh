@@ -229,11 +229,9 @@ md_.rpart <- function(x, xnm, ...) {
   ) |> 
     new(Class = 'md_lines', package = 'rpart', bibentry = .breiman84())
   
-  z2 <- c(
-    '```{r}',
-    xnm |> sprintf(fmt = 'prp_(%s)'),
-    '```'
-  ) |> new(Class = 'md_lines')
+  z2 <- xnm |> 
+    sprintf(fmt = 'prp_(%s)') |> 
+    new(Class = 'md_lines', chunk.r = TRUE)
   
   if (is.Surv.endpoint.rpart(x)) {
     
