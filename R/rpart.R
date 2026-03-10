@@ -1,33 +1,34 @@
 
 
-#' @title Sample Size in \link[rpart]{rpart.object}
+#' @title \link[rpart]{rpart.object}
 #' 
-#' @description 
-#' Method dispatch for S3 generic \link[stats]{nobs}.
+#' @examples
+#' library(survival)
+#' vet = survival::veteran |>
+#'  within.data.frame(expr = {
+#'   time = as.difftime(time, units = 'days')
+#'   os = Surv(time, status)
+#'  })
 #' 
-#' @param object an \link[rpart]{rpart.object}
+#' list(
+#'  'non survival' = rpart(Kyphosis ~ Age + Start, data = kyphosis, model = TRUE),
+#'  'survival' = rpart(os ~ age, data = vet, maxdepth = 2L, model = TRUE)
+#' ) |> fastmd::render2html()
 #' 
-#' @param ... additional parameters, not currently in use
-#' 
-#' @returns 
-#' Function [nobs.rpart()] returns an \link[base]{integer} scalar.
-#' 
-#' @keywords internal
-#' @export nobs.rpart
+#' @name rpart
+NULL
+
+
+
+
 #' @export
 nobs.rpart <- function(object, ...) object$frame$n[1L]
 
 
 
 
-#' @title Does an \link[rpart]{rpart.object} Has a \link[survival]{Surv} Endpoint?
-#' 
-#' @param object an \link[rpart]{rpart.object}
-#' 
-#' @keywords internal
 #' @importFrom survival.tzh is.Surv.endpoint
 #' @method is.Surv.endpoint rpart
-#' @export is.Surv.endpoint.rpart
 #' @export
 is.Surv.endpoint.rpart <- function(object) {
   # 2025-01-06: ?rpart::rpart.exp changes 'Surv' endpoint `object$y` to 'matrix'
@@ -136,23 +137,9 @@ survdiff_.rpart <- function(object, fmt = '%.2g', ...) {
 
 
 
-#' @title Creates ggplot from \link[rpart]{rpart.object}
-#' 
-#' @description
-#' ..
-#' 
-#' @param object an \link[rpart]{rpart.object}
-#' 
-#' @param ... additional parameters of function \link[survival.tzh]{autoplot.survfit}
-#' 
-#' @returns
-#' Function [autoplot.rpart()] returns a \link[ggplot2]{ggplot} object.
-#' 
-#' @keywords internal
 #' @importFrom ggplot2 autoplot labs
 #' @importFrom survival.tzh autoplot.survfit
 #' @importFrom fastmd label_pvalue_sym
-#' @export autoplot.rpart
 #' @export
 autoplot.rpart <- function(object, ...) {
   
@@ -183,38 +170,9 @@ autoplot.rpart <- function(object, ...) {
 
 
 
-#' @title Create Markdown Lines for \link[rpart]{rpart.object}
-#' 
-#' @description
-#' ..
-#' 
-#' @param x an \link[rpart]{rpart.object}
-#' 
-#' @param xnm \link[base]{character} scalar
-#' 
-#' @param ... ..
-#' 
-#' @returns 
-#' Function [md_.rpart()] returns a \link[base]{character} \link[base]{vector}.
-#' 
-#' @examples
-#' library(survival)
-#' vet = survival::veteran |>
-#'  within.data.frame(expr = {
-#'   time = as.difftime(time, units = 'days')
-#'   os = Surv(time, status)
-#'  })
-#' 
-#' list(
-#'  'non survival' = rpart(Kyphosis ~ Age + Start, data = kyphosis, model = TRUE),
-#'  'survival' = rpart(os ~ age, data = vet, maxdepth = 2L, model = TRUE)
-#' ) |> fastmd::render2html()
-#' 
-#' @keywords internal
-#' @importFrom fastmd md_ md_.default md_autoplot_
+#' @importFrom fastmd md_ md_autoplot_
 #' @importClassesFrom fastmd md_lines
 #' @importFrom survival.tzh .kaplan_meier58
-#' @export md_.rpart
 #' @export
 md_.rpart <- function(x, xnm, ...) {
   

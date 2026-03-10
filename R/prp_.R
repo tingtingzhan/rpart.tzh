@@ -10,12 +10,12 @@
 #' @param ... additional parameters, currently of no use
 #' 
 #' @note 
-#' Function `ggdendro::ggdendrogram` will plot \link[rpart]{rpart.object}, but not very good.
+#' The function `ggdendro::ggdendrogram` will plot \link[rpart]{rpart.object}, but not very good.
 #' 
 #' Another option is `?partykit::plot.party`, which seems to requires numeric endpoint and/or branching criterion (?)
 #' 
 #' @returns 
-#' Function [prp_()] does not have a returned value.
+#' The function [prp_()] does not have a returned value.
 #' 
 #' @references 
 #' \url{http://www.di.fc.ul.pt/~jpn/r/tree/tree.html}

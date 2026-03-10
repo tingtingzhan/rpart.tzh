@@ -12,13 +12,13 @@ prp_(x, ...)
 \item{...}{additional parameters, currently of no use}
 }
 \value{
-Function \code{\link[=prp_]{prp_()}} does not have a returned value.
+The function \code{\link[=prp_]{prp_()}} does not have a returned value.
 }
 \description{
 Do NOT overwrites function \code{rpart:::print.rpart()}.
 }
 \note{
-Function \code{ggdendro::ggdendrogram} will plot \link[rpart]{rpart.object}, but not very good.
+The function \code{ggdendro::ggdendrogram} will plot \link[rpart]{rpart.object}, but not very good.
 
 Another option is \code{?partykit::plot.party}, which seems to requires numeric endpoint and/or branching criterion (?)
 }
