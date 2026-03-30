@@ -11,7 +11,7 @@ Authors@R: c(person(given = "Tingting", family = "Zhan", role =
 Language: en-US
 RoxygenNote: 7.3.3
 Roxygen: list(markdown = TRUE)
-Depends: R (>= 4.5), rpart (== 4.1.24)
+Depends: R (>= 4.5), rpart (== 4.1.27)
 Imports: methods, 
     ggplot2 (== 4.0.2),
     rpart.plot (== 3.1.4), 
