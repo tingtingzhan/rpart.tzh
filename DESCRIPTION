@@ -13,7 +13,7 @@ RoxygenNote: 7.3.3
 Roxygen: list(markdown = TRUE)
 Depends: R (>= 4.5), rpart (== 4.1.27)
 Imports: methods, 
-    ggplot2 (== 4.0.2),
+    ggplot2 (== 4.0.3),
     rpart.plot (== 3.1.4), 
     survival (== 3.8.6),
     survival.tzh,
