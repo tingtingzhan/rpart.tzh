@@ -9,8 +9,6 @@ Authors@R: c(person(given = "Tingting", family = "Zhan", role =
        c("aut", "cre"), email =
        c("tingtingzhan@gmail.com")))
 Language: en-US
-RoxygenNote: 7.3.3
-Roxygen: list(markdown = TRUE)
 Depends: R (>= 4.5), rpart (== 4.1.27)
 Imports: methods, 
     ggplot2 (== 4.0.3),
@@ -18,3 +16,5 @@ Imports: methods,
     survival (== 3.8.6),
     survival.tzh,
     fastmd
+Config/roxygen2/version: 8.0.0
+Config/roxygen2/markdown: TRUE

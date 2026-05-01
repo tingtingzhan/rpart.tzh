@@ -15,5 +15,10 @@ Users are encouraged to get started with the vignettes.
 \author{
 \strong{Maintainer}: Tingting Zhan \email{tingtingzhan@gmail.com}
 
+Authors:
+\itemize{
+  \item Tingting Zhan \email{tingtingzhan@gmail.com}
+}
+
 }
 \keyword{internal}
