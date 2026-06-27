@@ -171,7 +171,7 @@ autoplot.rpart <- function(object, ...) {
 
 
 #' @importFrom fastmd md_ md_int
-#' @importClassesFrom fastmd md_lines
+#' @importClassesFrom fastmd md
 #' @importFrom survival.tzh .kaplan_meier58
 #' @export
 md_.rpart <- function(x, xnm, ...) {
@@ -185,11 +185,11 @@ md_.rpart <- function(x, xnm, ...) {
       paste(collapse = ', '),
     x$frame$n[1L]
   ) |> 
-    new(Class = 'md_lines', package = 'rpart', bibentry = .breiman84())
+    new(Class = 'md', package = 'rpart', bibentry = .breiman84())
   
   z2 <- xnm |> 
     sprintf(fmt = 'prp_(%s)') |> 
-    new(Class = 'md_lines', chunk.r = TRUE)
+    new(Class = 'md', chunk.r = TRUE)
   
   if (is.Surv.endpoint.rpart(x)) {
     
@@ -198,7 +198,7 @@ md_.rpart <- function(x, xnm, ...) {
     # yet..
     
     z31 <- '@KaplanMeier58 estimates and curves based on the partition branches are created by <u>**`R`**</u> package <u>**`survival`**</u>.' |>
-      new(Class = 'md_lines', package = 'survival', bibentry = .kaplan_meier58())
+      new(Class = 'md', package = 'survival', bibentry = .kaplan_meier58())
     
     z32 <- md_int(x = x, xnm = xnm, engine = 'autoplot', ...)
     
