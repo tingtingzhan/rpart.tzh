@@ -2,6 +2,7 @@ Package: rpart.tzh
 Type: Package
 Title: Extensions for rpart
 Version: 0.1.0
+Date: 2026-07-08
 Description: To extend rpart package.
 License: GPL-2
 Encoding: UTF-8
@@ -9,11 +10,11 @@ Authors@R: c(person(given = "Tingting", family = "Zhan", role =
        c("aut", "cre"), email =
        c("tingtingzhan@gmail.com")))
 Language: en-US
-Depends: R (>= 4.5), rpart (== 4.1.27)
+Depends: R (>= 4.6), rpart (== 4.1.27)
 Imports: methods, 
     ggplot2 (== 4.0.3),
     rpart.plot (== 3.1.4), 
-    survival (== 3.8.6),
+    survival (== 3.8.9),
     survival.tzh,
     fastmd
 Config/roxygen2/version: 8.0.0
